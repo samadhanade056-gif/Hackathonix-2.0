@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — InternAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- ░░ NAV ░░ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="../index.html" class="logo">Intern<span>AI</span></a>
+    <div class="nav-links" style="margin-left:auto">
+      <span style="font-size:.875rem;color:var(--text-2)">Hello, <span id="userName">Student</span></span>
+      <button onclick="InternAI.logout()" class="btn-nav">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ SIDEBAR ░░ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Main</div>
+    <a class="sidebar-link active" href="dashboard.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+      Dashboard
+    </a>
+    <a class="sidebar-link" href="internships.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      All Internships
+    </a>
+    <a class="sidebar-link" href="profile.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      My Profile
+    </a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Analysis</div>
+    <a class="sidebar-link" href="#skillsPanel" onclick="document.getElementById('skillsPanel').scrollIntoView({behavior:'smooth'})">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12V8M6 12V4M10 12V7M14 12V2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Skills Analysis
+    </a>
+    <a class="sidebar-link" href="#" onclick="switchTab('gap')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M8 5v3.5l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Gap Analysis
+    </a>
+  </div>
+</aside>
+
+<!-- ░░ MAIN ░░ -->
+<main class="dash-main">
+  <!-- Header -->
+  <div class="dash-header">
+    <h1>Dashboard</h1>
+    <p>Upload your resume to get AI-powered internship matches</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card-label">Skills Detected</div>
+      <div class="stat-card-val" id="statSkills">—</div>
+      <div class="stat-card-sub">From your resume</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Matches Found</div>
+      <div class="stat-card-val" id="statMatches">—</div>
+      <div class="stat-card-sub">Above 20% score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">ATS Score</div>
+      <div class="stat-card-val" id="statScore">—</div>
+      <div class="stat-card-sub">Resume quality</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Applied</div>
+      <div class="stat-card-val" id="statApplied">0</div>
+      <div class="stat-card-sub">This session</div>
+    </div>
+  </div>
+
+  <!-- Upload -->
+  <div class="upload-zone" id="uploadZone">
+    <input type="file" id="resumeInput" accept=".pdf,.docx,.txt" style="display:none"/>
+    <div class="upload-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 15V3M7 8l5-5 5 5M20 15v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4" stroke="var(--accent-2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h3>Upload Your Resume</h3>
+    <p>Drag & drop PDF, DOCX, or TXT — or click to browse</p>
+    <span class="btn-upload">Browse Files</span>
+  </div>
+
+  <!-- Results Section (hidden until upload) -->
+  <div id="resultsSection" style="display:none">
+
+    <!-- Tabs -->
+    <div class="tabs" id="tabRow">
+      <div class="tab active" onclick="switchTab('recommendations')">🎯 Recommendations</div>
+      <div class="tab" onclick="switchTab('skills')">🧠 Skills</div>
+      <div class="tab" onclick="switchTab('gap')">📉 Gap Analysis</div>
+      <div class="tab" onclick="switchTab('ats')">📊 ATS Score</div>
+    </div>
+
+    <!-- RECOMMENDATIONS TAB -->
+    <div id="tab-recommendations">
+      <div class="section-title-row">
+        <div class="section-title">Top Matches For You</div>
+        <a href="internships.html" class="section-link">View all →</a>
+      </div>
+      <div class="internships-grid" id="recommendationsGrid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- SKILLS TAB -->
+    <div id="tab-skills" style="display:none">
+      <div class="skills-panel" id="skillsPanel">
+        <div class="skills-panel-header">
+          <h3>Extracted Skills</h3>
+          <p>Detected from your resume using NLP + AI</p>
+        </div>
+        <div class="skills-panel-body">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- GAP ANALYSIS TAB -->
+    <div id="tab-gap" style="display:none">
+      <div class="gap-panel" id="gapPanel">
+        <h3>📉 Skill Gap Analysis — Top Match</h3>
+        <p style="color:var(--text-2);font-size:.85rem;margin-bottom:20px">
+          Skills you're missing for your #1 recommended internship
+        </p>
+        <div id="gapList">
+          <!-- populated by JS -->
+        </div>
+        <div style="margin-top:24px;padding:16px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:var(--radius-sm)">
+          <h4 style="font-size:.875rem;margin-bottom:8px;color:var(--green)">✅ Your Strengths</h4>
+          <div id="strengthList" class="intern-skills"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATS SCORE TAB -->
+    <div id="tab-ats" style="display:none">
+      <div class="skills-panel">
+        <div class="skills-panel-header">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <h3>ATS Resume Score</h3>
+              <p>How well your resume performs in Applicant Tracking Systems</p>
+            </div>
+            <div style="text-align:right">
+              <div style="font-family:var(--font-display);font-size:2.5rem;font-weight:800;color:var(--accent-2)" id="atsScore">—</div>
+              <div style="font-size:.78rem;color:var(--text-2)">Grade: <span id="atsGrade" style="color:var(--green);font-weight:700">—</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="atsBreakdown">
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Skills Richness</span><span id="val-skills">0 pts</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-skills" style="width:0%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Contact Info</span><span id="val-contact">0 pts</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-contact" style="width:0%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Education</span><span id="val-edu">0 pts</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-edu" style="width:0%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Sections Present</span><span id="val-sec">0 pts</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-sec" style="width:0%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Experience Entries</span><span id="val-exp">0 pts</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-exp" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /resultsSection -->
+
+</main>
+
+<!-- ░░ MODAL ░░ -->
+<div id="modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px">
+  <div id="modalBody" style="background:var(--bg-card);border:1px solid var(--border-hi);border-radius:20px;max-width:520px;width:100%;padding:36px;position:relative;max-height:90vh;overflow-y:auto">
+    <button onclick="closeModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-2);font-size:1.2rem">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+  // Auth guard
+  if (!localStorage.getItem('intern_token')) {
+    window.location.href = 'login.html';
+  }
+
+  const user = JSON.parse(localStorage.getItem('intern_user') || '{}');
+  const nameEl = document.getElementById('userName');
+  if (nameEl && user.name) nameEl.textContent = user.name.split(' ')[0];
+
+  // Init upload
+  InternAI.initUploadZone('uploadZone', 'resumeInput', file => {
+    // Demo mode: simulate analysis
+    const token = localStorage.getItem('intern_token');
+    if (token === 'demo_token') {
+      simulateDemoAnalysis(file.name);
+    } else {
+      InternAI.uploadResume(file);
+    }
+  });
+
+  // Tab switching
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', ['recommendations','skills','gap','ats'][i] === name);
+    });
+    ['recommendations','skills','gap','ats'].forEach(t => {
+      const el = document.getElementById('tab-' + t);
+      if (el) el.style.display = t === name ? 'block' : 'none';
+    });
+  }
+
+  // Modal
+  function openInternModal(r) {
+    const modal = document.getElementById('modal');
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `
+      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:4px">${r.title}</h2>
+      <p style="color:var(--text-2);margin-bottom:20px">${r.company} · ${r.location}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:var(--bg);border-radius:10px;padding:14px">
+          <div style="font-size:.72rem;color:var(--text-2);margin-bottom:4px">Duration</div>
+          <div style="font-weight:700">${r.duration}</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px">
+          <div style="font-size:.72rem;color:var(--text-2);margin-bottom:4px">Stipend</div>
+          <div style="font-weight:700;color:var(--green)">${r.stipend}</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px">
+          <div style="font-size:.72rem;color:var(--text-2);margin-bottom:4px">Match Score</div>
+          <div style="font-weight:700;color:var(--accent-2)">${r.match_score}%</div>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:14px">
+          <div style="font-size:.72rem;color:var(--text-2);margin-bottom:4px">Rank</div>
+          <div style="font-weight:700">#${r.rank}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <h4 style="font-size:.82rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">✅ Matched Skills</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${(r.matched_skills||[]).map(s=>`<span class="chip chip--green">${s}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:24px">
+        <h4 style="font-size:.82rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">❌ Missing Skills</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${(r.missing_skills||[]).map(s=>`<span class="chip chip--red">${s}</span>`).join('')}
+        </div>
+      </div>
+      <p style="font-size:.82rem;color:var(--text-2);margin-bottom:20px">${r.recommendation || ''}</p>
+      <button class="btn-full" onclick="applyToInternship('${r.id}')">Apply Now →</button>
+    `;
+    modal.style.display = 'flex';
+    modal.style.animation = 'fadeUp .3s ease both';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+  }
+
+  function applyToInternship(id) {
+    InternAI.showToast('Application submitted! ✅');
+    const applied = document.getElementById('statApplied');
+    if (applied) applied.textContent = (parseInt(applied.textContent)||0) + 1;
+    closeModal();
+  }
+
+  // Modal click outside
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ── Demo simulation (no backend) ────────────────────────────────
+  function simulateDemoAnalysis(filename) {
+    const zone = document.getElementById('uploadZone');
+    zone.innerHTML = `
+      <div class="spinner" style="margin:0 auto"></div>
+      <p style="margin-top:16px;color:var(--text-2)">AI is analyzing ${filename}...</p>
+    `;
+
+    setTimeout(() => {
+      const demoData = getDemoData();
+      zone.innerHTML = `
+        <div class="upload-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7 18H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>✅ ${filename}</h3>
+        <p>${demoData.skills.total_skills_found} skills extracted · ATS Score: ${demoData.ats_score.total_score}/100</p>
+      `;
+      InternAI.showToast('Resume analyzed! ' + demoData.skills.total_skills_found + ' skills found 🎉');
+      renderDemoResults(demoData);
+    }, 2500);
+  }
+
+  function getDemoData() {
+    return {
+      skills: {
+        total_skills_found: 18,
+        all_skills: ['python','react','sql','git','machine learning','flask','docker','aws','nodejs','mongodb','pandas','numpy','tensorflow','html','css','javascript','postgresql','redis'],
+        by_category: {
+          programming_languages: [
+            {skill:'python',confidence:.95},{skill:'javascript',confidence:.88},{skill:'sql',confidence:.82}
+          ],
+          web_frontend: [
+            {skill:'react',confidence:.91},{skill:'html',confidence:.85},{skill:'css',confidence:.85}
+          ],
+          web_backend: [
+            {skill:'flask',confidence:.87},{skill:'nodejs',confidence:.78},{skill:'rest api',confidence:.72}
+          ],
+          ai_ml: [
+            {skill:'machine learning',confidence:.88},{skill:'tensorflow',confidence:.75},{skill:'pandas',confidence:.82},{skill:'numpy',confidence:.80}
+          ],
+          databases: [
+            {skill:'mongodb',confidence:.79},{skill:'postgresql',confidence:.74},{skill:'redis',confidence:.65}
+          ],
+          cloud_devops: [
+            {skill:'docker',confidence:.82},{skill:'aws',confidence:.70},{skill:'git',confidence:.92}
+          ]
+        }
+      },
+      ats_score: { total_score: 78, grade: 'B', breakdown: { skills_richness: 27, contact_completeness: 15, education: 12, sections_present: 16, experience_entries: 8 } },
+      recommendations: {
+        top_recommendations: [
+          { rank:1, id:'INT001', title:'Python Backend Developer Intern', company:'TechCorp Solutions', location:'Remote', duration:'3 months', stipend:'₹15,000/mo', match_score:88, matched_skills:['python','flask','sql','git'], missing_skills:['docker','aws'], recommendation:'🟢 Excellent match!' },
+          { rank:2, id:'INT003', title:'Machine Learning Intern', company:'AI Ventures', location:'Remote', duration:'3 months', stipend:'₹18,000/mo', match_score:82, matched_skills:['python','machine learning','pandas','numpy'], missing_skills:['scikit-learn'], recommendation:'🟢 Excellent match!' },
+          { rank:3, id:'INT002', title:'Full Stack Developer Intern', company:'StartupXYZ', location:'Bangalore', duration:'6 months', stipend:'₹20,000/mo', match_score:74, matched_skills:['react','nodejs','javascript'], missing_skills:['mongodb','typescript'], recommendation:'🟡 Good match.' },
+          { rank:4, id:'INT004', title:'Data Science Intern', company:'DataWave Analytics', location:'Mumbai', duration:'4 months', stipend:'₹12,000/mo', match_score:68, matched_skills:['python','sql','pandas','numpy'], missing_skills:['matplotlib','seaborn'], recommendation:'🟡 Good match.' },
+        ],
+        skill_gap_for_top_match: {
+          strengths: ['python','flask','sql','git','docker'],
+          missing_critical_skills: ['postgresql','redis'],
+          missing_preferred_skills: ['aws','kubernetes']
+        }
+      }
+    };
+  }
+
+  function renderDemoResults(data) {
+    const resultsSection = document.getElementById('resultsSection');
+    resultsSection.style.display = 'block';
+
+    // Stats
+    const counters = [
+      ['statSkills', data.skills.total_skills_found],
+      ['statMatches', data.recommendations.top_recommendations.length],
+      ['statScore', data.ats_score.total_score]
+    ];
+    counters.forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) InternAI && animateCounterLocal(el, val);
+    });
+
+    // Recommendations
+    const grid = document.getElementById('recommendationsGrid');
+    if (grid) {
+      grid.innerHTML = data.recommendations.top_recommendations
+        .map(r => InternAI.renderInternCard(r)).join('');
+    }
+
+    // Skills panel
+    const skillsBody = document.querySelector('.skills-panel-body');
+    if (skillsBody) {
+      let html = '';
+      for (const [cat, items] of Object.entries(data.skills.by_category)) {
+        const label = cat.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        const COLORS = {programming_languages:'--accent',web_frontend:'--blue',web_backend:'--teal',databases:'--orange',ai_ml:'--purple',cloud_devops:'--green'};
+        html += `<div class="skill-category">
+          <h4>${label}</h4>
+          <div class="skill-tags">
+            ${items.map(i=>`<span class="skill-tag" style="background:rgba(99,102,241,.1);color:var(${COLORS[cat]||'--text-2'});border:1px solid rgba(99,102,241,.15)">
+              ${i.skill} <span class="skill-conf">${Math.round(i.confidence*100)}%</span>
+            </span>`).join('')}
+          </div>
+        </div>`;
+      }
+      skillsBody.innerHTML = html;
+    }
+
+    // ATS score
+    document.getElementById('atsScore').textContent = data.ats_score.total_score + '/100';
+    document.getElementById('atsGrade').textContent = data.ats_score.grade;
+    const bd = data.ats_score.breakdown;
+    const maps = {skills_richness:['prog-skills',35], contact_completeness:['prog-contact',15], education:['prog-edu',15], sections_present:['prog-sec',20], experience_entries:['prog-exp',15]};
+    for(const [key,[progId,max]] of Object.entries(maps)){
+      const el = document.getElementById(progId);
+      if(el){ setTimeout(()=>{ el.style.width = Math.round((bd[key]/max)*100)+'%'; },400); }
+    }
+
+    // Gap analysis
+    const gap = data.recommendations.skill_gap_for_top_match;
+    const gapList = document.getElementById('gapList');
+    if(gapList && gap) {
+      gapList.innerHTML = [...(gap.missing_critical_skills||[]),...(gap.missing_preferred_skills||[])].map(s=>`
+        <div class="gap-item">
+          <span class="gap-skill">❌ ${s}</span>
+          <span class="gap-learn" onclick="InternAI.showToast('Opening ${s} course...')">Learn on Coursera →</span>
+        </div>`).join('');
+    }
+    const strengthList = document.getElementById('strengthList');
+    if(strengthList && gap) {
+      strengthList.innerHTML = (gap.strengths||[]).map(s=>`<span class="chip chip--green">${s}</span>`).join('');
+    }
+
+    resultsSection.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function animateCounterLocal(el, target) {
+    let cur = 0; const step = target/40;
+    const t = setInterval(()=>{ cur+=step; if(cur>=target){cur=target;clearInterval(t);} el.textContent=Math.floor(cur); },30);
+  }
+</script>
+</body>
+</html>

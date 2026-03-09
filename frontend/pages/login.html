@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — InternAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="hero-bg">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo">Intern<span>AI</span></a>
+  </div>
+</nav>
+
+<main class="auth-page">
+  <div class="auth-card">
+    <a href="../index.html" class="logo">Intern<span>AI</span></a>
+    <h1 class="auth-title">Welcome back</h1>
+    <p class="auth-sub">Don't have an account? <a href="register.html">Sign up free</a></p>
+
+    <form id="loginForm" onsubmit="InternAI.handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" placeholder="you@example.com" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-input" type="password" id="password" placeholder="••••••••" required/>
+      </div>
+      <button type="submit" class="btn-full" style="margin-top:8px">Login</button>
+    </form>
+
+    <div class="divider"><span>or continue with demo</span></div>
+
+    <button class="btn-full" style="background:var(--bg-card2);border:1px solid var(--border-hi);color:var(--text-2)"
+      onclick="demoLogin()">
+      🚀 Try Demo Account
+    </button>
+
+    <p class="auth-switch">Forgot password? <a href="#">Reset here</a></p>
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+<script>
+  // If already logged in
+  if (InternAI && localStorage.getItem('intern_token')) {
+    window.location.href = 'dashboard.html';
+  }
+
+  function demoLogin() {
+    document.getElementById('email').value = 'demo@internai.com';
+    document.getElementById('password').value = 'demo1234';
+    // For demo without backend, go straight to dashboard
+    localStorage.setItem('intern_token', 'demo_token');
+    localStorage.setItem('intern_user', JSON.stringify({
+      name: 'Demo Student', email: 'demo@internai.com'
+    }));
+    InternAI.showToast('Demo login successful! 🎉');
+    setTimeout(() => window.location.href = 'dashboard.html', 800);
+  }
+</script>
+</body>
+</html>

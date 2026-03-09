@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internships — InternAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<div class="noise"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="../index.html" class="logo">Intern<span>AI</span></a>
+    <div class="nav-links" style="margin-left:auto">
+      <a href="dashboard.html" class="btn-nav">Dashboard</a>
+      <button onclick="InternAI.logout()" class="btn-nav">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Main</div>
+    <a class="sidebar-link" href="dashboard.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+      Dashboard
+    </a>
+    <a class="sidebar-link active" href="internships.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      All Internships
+    </a>
+    <a class="sidebar-link" href="profile.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      My Profile
+    </a>
+  </div>
+</aside>
+
+<main class="dash-main">
+  <div class="dash-header">
+    <h1>All Internships</h1>
+    <p>Browse 2,400+ opportunities · Upload resume for personalized match scores</p>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="search-input-wrap">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M6 11A5 5 0 106 1a5 5 0 000 10zM13 13l-3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <input class="search-input" type="text" id="searchInput" placeholder="Search by role, company, or skill..." oninput="filterInternships()"/>
+    </div>
+    <select class="filter-select" id="domainFilter" onchange="filterInternships()">
+      <option value="">All Domains</option>
+      <option value="web_backend">Backend</option>
+      <option value="web_frontend">Frontend</option>
+      <option value="ai_ml">AI / ML</option>
+      <option value="cloud_devops">DevOps / Cloud</option>
+      <option value="data_engineering">Data Engineering</option>
+      <option value="tools_other">Mobile / Other</option>
+    </select>
+    <select class="filter-select" id="locationFilter" onchange="filterInternships()">
+      <option value="">All Locations</option>
+      <option value="remote">Remote</option>
+      <option value="bangalore">Bangalore</option>
+      <option value="mumbai">Mumbai</option>
+      <option value="delhi">Delhi</option>
+      <option value="pune">Pune</option>
+      <option value="hyderabad">Hyderabad</option>
+    </select>
+    <select class="filter-select" id="durationFilter" onchange="filterInternships()">
+      <option value="">Any Duration</option>
+      <option value="2">2 months</option>
+      <option value="3">3 months</option>
+      <option value="4">4 months</option>
+      <option value="6">6 months</option>
+    </select>
+    <button class="btn-nav" style="white-space:nowrap" onclick="clearFilters()">Clear ✕</button>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="font-size:.875rem;color:var(--text-2)"><span id="resultCount">10</span> internships found</div>
+    <select class="filter-select" id="sortFilter" onchange="filterInternships()">
+      <option value="match">Sort by: Match Score</option>
+      <option value="stipend">Sort by: Stipend</option>
+      <option value="duration">Sort by: Duration</option>
+    </select>
+  </div>
+
+  <div class="internships-grid" id="allInternshipsGrid" style="grid-template-columns:repeat(2,1fr)">
+    <!-- Populated by JS -->
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+<script>
+  const ALL_INTERNSHIPS = [
+    { rank:1, id:'INT001', title:'Python Backend Developer Intern', company:'TechCorp Solutions', location:'Remote', duration:'3 months', stipend:'₹15,000/mo', domain:'web_backend', match_score:88, matched_skills:['python','flask','sql','git'], missing_skills:['docker','aws'], recommendation:'🟢 Excellent match!' },
+    { rank:2, id:'INT002', title:'Full Stack Developer Intern', company:'StartupXYZ', location:'Bangalore', duration:'6 months', stipend:'₹20,000/mo', domain:'web_frontend', match_score:74, matched_skills:['react','nodejs','javascript'], missing_skills:['mongodb','typescript'], recommendation:'🟡 Good match.' },
+    { rank:3, id:'INT003', title:'Machine Learning Intern', company:'AI Ventures', location:'Remote', duration:'3 months', stipend:'₹18,000/mo', domain:'ai_ml', match_score:82, matched_skills:['python','machine learning','pandas'], missing_skills:['scikit-learn'], recommendation:'🟢 Excellent match!' },
+    { rank:4, id:'INT004', title:'Data Science Intern', company:'DataWave Analytics', location:'Mumbai', duration:'4 months', stipend:'₹12,000/mo', domain:'ai_ml', match_score:68, matched_skills:['python','sql','pandas','numpy'], missing_skills:['matplotlib'], recommendation:'🟡 Good match.' },
+    { rank:5, id:'INT005', title:'DevOps Intern', company:'CloudBase Inc.', location:'Remote', duration:'3 months', stipend:'₹16,000/mo', domain:'cloud_devops', match_score:55, matched_skills:['docker','linux','git'], missing_skills:['kubernetes','terraform'], recommendation:'🟡 Good match.' },
+    { rank:6, id:'INT006', title:'Frontend Developer Intern', company:'PixelCraft Studio', location:'Delhi', duration:'2 months', stipend:'₹10,000/mo', domain:'web_frontend', match_score:80, matched_skills:['html','css','javascript','react'], missing_skills:['typescript'], recommendation:'🟢 Excellent match!' },
+    { rank:7, id:'INT007', title:'NLP Research Intern', company:'ResearchLab AI', location:'Remote', duration:'6 months', stipend:'₹22,000/mo', domain:'ai_ml', match_score:72, matched_skills:['python','nlp','spacy'], missing_skills:['transformers','pytorch'], recommendation:'🟡 Good match.' },
+    { rank:8, id:'INT008', title:'Android Developer Intern', company:'MobileMagic', location:'Pune', duration:'3 months', stipend:'₹14,000/mo', domain:'tools_other', match_score:42, matched_skills:['java','git'], missing_skills:['android','kotlin'], recommendation:'🟠 Moderate match.' },
+    { rank:9, id:'INT009', title:'Cloud & AWS Intern', company:'NimbusTech', location:'Remote', duration:'3 months', stipend:'₹17,000/mo', domain:'cloud_devops', match_score:60, matched_skills:['aws','python','linux'], missing_skills:['terraform'], recommendation:'🟡 Good match.' },
+    { rank:10, id:'INT010', title:'React Native Mobile Dev Intern', company:'AppForge', location:'Hyderabad', duration:'4 months', stipend:'₹13,000/mo', domain:'tools_other', match_score:58, matched_skills:['react','javascript'], missing_skills:['react native','firebase'], recommendation:'🟡 Good match.' },
+  ];
+
+  let filtered = [...ALL_INTERNSHIPS];
+
+  function filterInternships() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const domain = document.getElementById('domainFilter').value;
+    const location = document.getElementById('locationFilter').value;
+    const duration = document.getElementById('durationFilter').value;
+    const sort = document.getElementById('sortFilter').value;
+
+    filtered = ALL_INTERNSHIPS.filter(i => {
+      const matchSearch = !search || i.title.toLowerCase().includes(search) || i.company.toLowerCase().includes(search) || i.matched_skills.join(' ').includes(search);
+      const matchDomain = !domain || i.domain === domain;
+      const matchLoc = !location || i.location.toLowerCase().includes(location);
+      const matchDur = !duration || i.duration.startsWith(duration);
+      return matchSearch && matchDomain && matchLoc && matchDur;
+    });
+
+    if (sort === 'stipend') {
+      filtered.sort((a,b) => parseInt(b.stipend.replace(/\D/g,'')) - parseInt(a.stipend.replace(/\D/g,'')));
+    } else if (sort === 'duration') {
+      filtered.sort((a,b) => parseInt(a.duration) - parseInt(b.duration));
+    } else {
+      filtered.sort((a,b) => b.match_score - a.match_score);
+    }
+
+    const grid = document.getElementById('allInternshipsGrid');
+    document.getElementById('resultCount').textContent = filtered.length;
+    grid.innerHTML = filtered.length
+      ? filtered.map(r => InternAI.renderInternCard(r)).join('')
+      : '<p style="color:var(--text-2);text-align:center;padding:60px;grid-column:span 2">No internships match your filters.</p>';
+  }
+
+  function clearFilters() {
+    ['searchInput','domainFilter','locationFilter','durationFilter'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+    filterInternships();
+  }
+
+  // Init
+  filterInternships();
+</script>
+</body>
+</html>

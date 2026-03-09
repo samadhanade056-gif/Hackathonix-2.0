@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InternAI — Smart Internship Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ░░ NOISE OVERLAY ░░ -->
+<div class="noise"></div>
+
+<!-- ░░ NAV ░░ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">Intern<span>AI</span></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="pages/login.html" class="btn-nav">Login</a>
+      <a href="pages/register.html" class="btn-nav btn-nav--filled">Get Started</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ░░ HERO ░░ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-lines"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      AI-Powered Matching Engine
+    </div>
+    <h1 class="hero-title">
+      Find Internships<br/>
+      That Actually<br/>
+      <em>Match You</em>
+    </h1>
+    <p class="hero-sub">
+      Upload your resume. Our NLP engine extracts your skills, calculates a
+      match score, and surfaces the exact internships you qualify for — in seconds.
+    </p>
+    <div class="hero-cta">
+      <a href="pages/register.html" class="btn-primary">
+        Start Matching Free
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#how" class="btn-ghost">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">2,400+</span><span class="stat-label">Internships</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span class="stat-num">94%</span><span class="stat-label">Match Accuracy</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span class="stat-num">12k+</span><span class="stat-label">Students Placed</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="card-float card-float--main">
+      <div class="cf-header">
+        <div class="cf-avatar">PS</div>
+        <div>
+          <div class="cf-name">Priya Sharma</div>
+          <div class="cf-role">B.Tech CSE · Mumbai</div>
+        </div>
+      </div>
+      <div class="cf-skills">
+        <span class="chip chip--green">Python</span>
+        <span class="chip chip--blue">React</span>
+        <span class="chip chip--purple">ML</span>
+        <span class="chip chip--orange">SQL</span>
+        <span class="chip chip--teal">Docker</span>
+      </div>
+      <div class="cf-match">
+        <div class="cf-match-label">Top Match</div>
+        <div class="cf-match-bar">
+          <div class="cf-match-fill" style="width:88%"></div>
+        </div>
+        <div class="cf-match-pct">88%</div>
+      </div>
+      <div class="cf-intern">
+        <div class="cf-intern-logo">ML</div>
+        <div>
+          <div class="cf-intern-title">ML Engineer Intern</div>
+          <div class="cf-intern-co">AI Ventures · Remote · ₹22k/mo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-float card-float--tag">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="#22c55e" fill-opacity=".2"/><circle cx="7" cy="7" r="3" fill="#22c55e"/></svg>
+      Skills Extracted
+    </div>
+    <div class="card-float card-float--score">
+      <div class="score-ring">
+        <svg viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="25" fill="none" stroke="#1e293b" stroke-width="5"/>
+          <circle cx="30" cy="30" r="25" fill="none" stroke="url(#sg)" stroke-width="5"
+                  stroke-dasharray="140 157" stroke-linecap="round"
+                  transform="rotate(-90 30 30)"/>
+          <defs>
+            <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>88%</span>
+      </div>
+      <div class="score-label">Match Score</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FEATURES ░░ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Features</div>
+      <h2>Everything you need to<br/>land the right internship</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card feature-card--large">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12h6M9 16h4M7 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M9 4a2 2 0 012-2h2a2 2 0 012 2v1H9V4z" stroke="#fff" stroke-width="1.8"/></svg>
+        </div>
+        <h3>AI Resume Parser</h3>
+        <p>Upload PDF or DOCX. Our NLP pipeline uses spaCy, TF-IDF, and Sentence-BERT to extract 200+ technical and soft skills with confidence scores.</p>
+        <div class="fc-tags">
+          <span>spaCy NER</span><span>TF-IDF</span><span>BERT</span>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20V10M18 20V4M6 20v-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Match Score</h3>
+        <p>Get a % match score for every internship based on required vs preferred skills with weighted cosine similarity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Skill Gap Analysis</h3>
+        <p>See exactly which skills you're missing for each internship and get suggested learning paths.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#0ea5e9,#2563eb)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Smart Search</h3>
+        <p>Filter by domain, location, stipend, and duration. Our semantic search finds roles you'd miss otherwise.</p>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Top Picks For You</h3>
+        <p>Personalized internship recommendations ranked by your unique skill profile, updated instantly on upload.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ HOW IT WORKS ░░ -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Process</div>
+      <h2>From resume to offer<br/>in 4 steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Upload Resume</h3>
+          <p>Drag & drop your PDF or DOCX. We support all standard resume formats.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>AI Extracts Skills</h3>
+          <p>NLP pipeline reads every line, identifies 200+ technical skills with confidence ratings.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Match & Score</h3>
+          <p>Cosine similarity ranks every internship in the database by your fit percentage.</p>
+        </div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Apply Confidently</h3>
+          <p>See matched skills, gap analysis, and apply directly with one click.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ CTA ░░ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="orb orb-cta1"></div>
+      <div class="orb orb-cta2"></div>
+      <h2>Ready to find your perfect internship?</h2>
+      <p>Join 12,000+ students who stopped applying blindly.</p>
+      <a href="pages/register.html" class="btn-primary btn-primary--lg">
+        Create Free Account
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Intern<span>AI</span></a>
+        <p>AI-powered internship matching for the next generation of developers.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#how">How It Works</a>
+          <a href="pages/dashboard.html">Dashboard</a>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <a href="pages/login.html">Login</a>
+          <a href="pages/register.html">Register</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 InternAI. Built for Hackathon. MIT License.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
