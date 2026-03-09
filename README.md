@@ -7,4 +7,4 @@ Problem Statement
 
 Many students struggle to find internships that match their skills, interests, and career goals.
 
-Popular platforms such as:
+Popular platforms such as:   p
